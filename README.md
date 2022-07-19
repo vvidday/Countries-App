@@ -1,16 +1,16 @@
-# Vue 3 + TypeScript + Vite
+# Countries App
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+[Frontend Mentor Challenge](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca) - Simple app that shows information about different countries using data from the [Rest Countries API](https://restcountries.com/).
 
-## Recommended IDE Setup
+Features:
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+-   See all countries from the API on the homepage
+-   Search for a country using an input field
+-   Filter countries by region
+-   Click on a country to see more detailed information on a separate page
+-   Click through to the border countries on the detail page
+-   Toggle the color scheme between light and dark mode (optional)
 
-## Type Support For `.vue` Imports in TS
+Built with [Vue](https://vuejs.org/) + [Vite](https://vitejs.dev/) and [Tailwind](https://tailwindcss.com/).
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
-
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
-
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+Uses [trie-search](https://www.npmjs.com/package/trie-search) package for searching.
