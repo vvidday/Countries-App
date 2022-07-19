@@ -2,6 +2,7 @@
 import { watch } from "fs";
 import { nextTick, PropType, ref } from "vue";
 import { CountryStore, CurrentCountryFunctions } from "../App.vue";
+// @ts-expect-error
 import { search } from "../search/countryData";
 
 const props = defineProps({
@@ -24,8 +25,9 @@ const matches = ref<string[]>(new Array());
 /*
 @param {string} str
 */
-function updateChange(str) {
+function updateChange(str: string): void {
     matches.value = new Array();
+    // @ts-expect-error
     search(str).forEach((x) => matches.value.push(x));
 }
 // Ref for focusing input
