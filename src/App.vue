@@ -66,9 +66,13 @@ const loading = ref<boolean>(true);
 
 // Ref to store preference for dark/light mode
 const prefersDarkMode = ref<boolean>(false);
-const toggleDarkMode: DarkModeFunctions = reactive({
-    toggleDarkMode() {
+// Reactive functions that are passed to nav.
+const navFunctions: NavFunctions = reactive({
+    toggleDarkMode(): void {
         prefersDarkMode.value = !prefersDarkMode.value;
+    },
+    toHomePage(): void {
+        isViewingIndividual.value = false;
     },
 });
 
@@ -90,8 +94,8 @@ onBeforeMount(async () => {
     for (const country of countryArray) {
         allCountries.addToCountries(country);
         allCountriesCodes.addToCountries(country);
-        // Build 10 countries we show on default
-        if (i++ < 10) countryListStore.addToList(country);
+        // Add all countries on default
+        countryListStore.addToList(country);
         // Build region set
         if (!regionList.value.has(country["region"]))
             regionList.value.add(country["region"]);
@@ -120,8 +124,9 @@ export interface CurrentCountryFunctions {
     setCurrentCountry(country: Country): void;
     toggleIsViewingIndividual(): void;
 }
-export interface DarkModeFunctions {
+export interface NavFunctions {
     toggleDarkMode(): void;
+    toHomePage(): void;
 }
 </script>
 
@@ -133,7 +138,7 @@ export interface DarkModeFunctions {
         >
             <Navbar
                 :prefers-dark-mode="prefersDarkMode"
-                :toggle-dark-mode="toggleDarkMode"
+                :navFunctions="navFunctions"
             />
             <div
                 class="mt-10 flex flex-col bp1:grid bp1:grid-cols-2 bp1:grid-rows-1"

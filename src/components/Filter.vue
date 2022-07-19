@@ -24,7 +24,10 @@ const filterByRegion = (e: Event) => {
     props.countryListStore.resetList();
     // Loop through allcountries
     props.allCountries.countries.forEach((value, key) => {
-        if (value['region'] === region) {
+        if (region === "all") {
+            props.countryListStore.addToList(value);
+        }
+        else if (value['region'] === region) {
             props.countryListStore.addToList(value);
         }
     })
@@ -40,6 +43,7 @@ const filterByRegion = (e: Event) => {
         @change="filterByRegion($event)"
     >
         <option selected disabled value="default">Filter by Region</option>
+        <option value="all">All</option>
         <option v-for="region in props.regionList" :value="region">
             {{ region }}
         </option>

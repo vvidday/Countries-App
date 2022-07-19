@@ -19,7 +19,7 @@ const props = defineProps({
             />
         </div>
         <div
-            class="bg-lmelements dark:bg-dmelements px-5 pb-10 text-sm rounded-b-md font-light"
+            class="bg-lmelements dark:bg-dmelements px-5 pb-10 text-sm rounded-b-md font-light w-[267px] h-[160px]"
         >
             <div>
                 <p class="font-bold text-base py-4">
