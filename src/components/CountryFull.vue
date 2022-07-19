@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from "vue";
+import { PropType, ref } from "vue";
 import { Country } from "../api/interfaces";
 import { CountryCodeStore, CurrentCountryFunctions } from "../App.vue";
 
@@ -15,6 +15,10 @@ const props = defineProps({
     currentCountryFunctions: {
         required: true,
         type: Object as PropType<CurrentCountryFunctions>,
+    },
+    prefersDarkMode: {
+        required: true,
+        type: Boolean,
     },
 });
 
@@ -64,7 +68,10 @@ const borderCountries = getBorders(props.country);
     >
         <div class="w-[320px] lg:w-3/5">
             <button
-                class="bg-lmelements dark:bg-dmelements px-6 py-1.5 shadow-lg hover:bg-slate-600"
+                :class="
+                    'px-6 py-1.5 shadow-lg ' +
+                    (prefersDarkMode ? 'button-dark' : 'button-light')
+                "
                 @click="currentCountryFunctions.toggleIsViewingIndividual"
             >
                 ← Back
@@ -136,12 +143,15 @@ const borderCountries = getBorders(props.country);
                         other countries!</span
                     >
                 </p>
-                <div>
+                <div style="">
                     <button
                         v-if="borderCountries !== undefined"
                         v-for="c in getBorders(country)"
                         @click="currentCountryFunctions.setCurrentCountry(c)"
-                        class="font-light px-4 py-1.5 mr-2 my-2 bg-lmelements dark:bg-dmelements hover:bg-slate-600"
+                        :class="
+                            'font-light px-4 py-1.5 mr-2 my-2 ' +
+                            (prefersDarkMode ? 'button-dark' : 'button-light')
+                        "
                     >
                         {{ c["name"]["common"] }}
                     </button>
@@ -150,3 +160,18 @@ const borderCountries = getBorders(props.country);
         </div>
     </div>
 </template>
+
+<style>
+.button-light {
+    background-color: hsl(0, 0%, 100%);
+}
+.button-light:hover {
+    background-color: rgb(203 213 225);
+}
+.button-dark {
+    background-color: hsl(209, 23%, 22%);
+}
+.button-dark:hover {
+    background-color: rgb(71 85 105);
+}
+</style>

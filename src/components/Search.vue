@@ -66,10 +66,10 @@ function goToCountryPage(countryName: string) {
             />
         </div>
 
-        <div v-if="isfocused" class="bg:lmelements dark:bg-dmelements">
+        <div v-if="isfocused" class="bg:lmelements dark:bg-dmelements z-10">
             <ul class="relative">
                 <li
-                    class="absolute bg-dmelements w-[344px] pl-4 cursor-pointer hover:bg-slate-600 h-[50px] leading-[50px]"
+                    class="absolute bg-slate-100 dark:bg-dmelements w-[344px] pl-4 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600 h-[50px] leading-[50px]"
                     :style="'top:' + index * 50 + 'px'"
                     @mousedown="goToCountryPage(x)"
                     v-for="(x, index) in matches"

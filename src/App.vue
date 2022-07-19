@@ -62,10 +62,29 @@ const currentCountryFunctions: CurrentCountryFunctions = reactive({
 // Set of Regions
 const regionList = ref<Set<string>>(new Set<string>());
 // Reactive boolean to wait for async call.
-const loading = ref(true);
+const loading = ref<boolean>(true);
+
+// Ref to store preference for dark/light mode
+const prefersDarkMode = ref<boolean>(false);
+const toggleDarkMode: DarkModeFunctions = reactive({
+    toggleDarkMode() {
+        prefersDarkMode.value = !prefersDarkMode.value;
+    },
+});
 
 // Function that loads all countries into memory (to be called before Mount)
 onBeforeMount(async () => {
+    // Dark Mode Checking
+    if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+        // Dark Mode
+        prefersDarkMode.value = true;
+    } else {
+        prefersDarkMode.value = false;
+    }
+
     const countryArray = await getAllCountries();
     let i = 0;
     for (const country of countryArray) {
@@ -101,48 +120,60 @@ export interface CurrentCountryFunctions {
     setCurrentCountry(country: Country): void;
     toggleIsViewingIndividual(): void;
 }
+export interface DarkModeFunctions {
+    toggleDarkMode(): void;
+}
 </script>
 
 <template>
-    <body class="text-black dark:text-white font-light">
-        <Navbar />
-        <div
-            class="mt-10 flex flex-col bp1:grid bp1:grid-cols-2 bp1:grid-rows-1"
+    <html :class="prefersDarkMode ? 'dark' : 'light'">
+        <body
+            class="dark:bg-dmbg bg-lmbg text-black dark:text-white font-light"
+            style="min-height: 100vh"
         >
+            <Navbar
+                :prefers-dark-mode="prefersDarkMode"
+                :toggle-dark-mode="toggleDarkMode"
+            />
             <div
-                class="flex justify-center bp1:justify-start bp1:ml-10 lg:ml-20"
+                class="mt-10 flex flex-col bp1:grid bp1:grid-cols-2 bp1:grid-rows-1"
             >
-                <Search
-                    :all-countries="allCountries"
-                    :current-country-functions="currentCountryFunctions"
-                    class=""
-                    v-if="!loading && !isViewingIndividual"
-                />
+                <div
+                    class="flex justify-center bp1:justify-start bp1:ml-10 lg:ml-20"
+                >
+                    <Search
+                        :all-countries="allCountries"
+                        :current-country-functions="currentCountryFunctions"
+                        class=""
+                        v-if="!loading && !isViewingIndividual"
+                    />
+                </div>
+                <div
+                    class="flex justify-center mt-6 bp1:mt-0 bp1:justify-end bp1:mr-10 lg:mr-20"
+                >
+                    <Filter
+                        v-if="!loading && !isViewingIndividual"
+                        :region-list="regionList"
+                        :country-list-store="countryListStore"
+                        :all-countries="allCountries"
+                    />
+                </div>
             </div>
-            <div
-                class="flex justify-center mt-6 bp1:mt-0 bp1:justify-end bp1:mr-10 lg:mr-20"
-            >
-                <Filter
-                    v-if="!loading && !isViewingIndividual"
-                    :region-list="regionList"
-                    :country-list-store="countryListStore"
-                    :all-countries="allCountries"
-                />
-            </div>
-        </div>
 
-        <CountryDisplay
-            v-if="!loading && !isViewingIndividual"
-            :country-list="countryListStore.countryList"
-            :current-country-functions="currentCountryFunctions"
-        />
-        <CountryFull
-            v-if="isViewingIndividual && currentCountry !== undefined"
-            :country="currentCountry"
-            :all-countries-codes="allCountriesCodes"
-            :current-country-functions="currentCountryFunctions"
-        />
-    </body>
+            <CountryDisplay
+                v-if="!loading && !isViewingIndividual"
+                :country-list="countryListStore.countryList"
+                :current-country-functions="currentCountryFunctions"
+            />
+            <CountryFull
+                v-if="isViewingIndividual && currentCountry !== undefined"
+                :country="currentCountry"
+                :all-countries-codes="allCountriesCodes"
+                :current-country-functions="currentCountryFunctions"
+                :prefers-dark-mode="prefersDarkMode"
+            />
+        </body>
+    </html>
 </template>
 
 <style scoped></style>
