@@ -31,6 +31,7 @@ export interface Country {
     coatOfArms: CoatOfArms;
     startOfWeek: string;
     capitalInfo: CapitalInfo;
+    borders?: string[];
 }
 
 export interface CapitalInfo {
@@ -47,7 +48,7 @@ export interface CoatOfArms {
 }
 
 export interface Currencies {
-    AWG: Awg;
+    [key: string]: Awg;
 }
 
 export interface Awg {
@@ -71,8 +72,7 @@ export interface Idd {
 }
 
 export interface Languages {
-    nld: string;
-    pap: string;
+    [key: string]: string;
 }
 
 export interface Maps {
