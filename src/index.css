@@ -5,3 +5,16 @@
     font-family: "Nunito Sans";
     src: url("/NunitoSans-Regular.ttf");
 }
+body,
+html {
+    background-color: hsl(207, 26%, 17%);
+    min-height: 100%;
+    margin: 0;
+}
+
+@media (prefers-color-scheme: light) {
+    body,
+    html {
+        background-color: hsl(0, 0%, 98%);
+    }
+}
