@@ -59,47 +59,93 @@ const borderCountries = getBorders(props.country);
 </script>
 
 <template>
-    <button @click="currentCountryFunctions.toggleIsViewingIndividual">
-        Back
-    </button>
-    <div>
-        <div>
+    <div
+        class="grid grid-cols-1 lg:grid-cols-2 grid-rows-1 justify-items-center my-10"
+    >
+        <div class="w-[320px] lg:w-3/5">
+            <button
+                class="bg-lmelements dark:bg-dmelements px-6 py-1.5 shadow-lg hover:bg-slate-600"
+                @click="currentCountryFunctions.toggleIsViewingIndividual"
+            >
+                ← Back
+            </button>
+        </div>
+    </div>
+
+    <div
+        class="grid grid-cols-1 lg:grid-cols-2 grid-rows-1 text-base justify-items-center items-center"
+    >
+        <div class="w-full">
             <img
+                class="m-auto lg:w-3/5"
                 :src="country['flags']['png']"
                 :alt="`Flag of ${country['name']['common']}`"
             />
         </div>
-        <div>
-            <p>{{ country["name"]["common"] }}</p>
-            <div>
-                <p><span>Native name: </span>{{ getNativeName(country) }}</p>
-                <p><span>Population: </span>{{ country["population"] }}</p>
-                <p><span>Region: </span>{{ country["region"] }}</p>
-                <p><span>Sub Region: </span>{{ country["subregion"] }}</p>
-                <p>
-                    <span>Capital: </span
-                    >{{ getCapital(country) || "No capital" }}
-                </p>
-                <p>
-                    <span>Top Level Domain: </span
-                    >{{ getDomain(country) || "No domain" }}
-                </p>
-                <p><span>Currencies: </span>{{ getCurrencies(country) }}</p>
-                <p><span>Language: </span>{{ getLanguages(country) }}</p>
+        <div
+            class="flex-col items-center lg:pr-20 w-[320px] mt-5 lg:w-auto lg:mt-0"
+        >
+            <p class="font-extrabold text-2xl mb-4">
+                {{ country["name"]["common"] }}
+            </p>
+            <div class="flex flex-col lg:flex-row justify-between">
+                <div class="lg:mr-10 xl:mr-36">
+                    <p class="my-2">
+                        <span class="font-semibold">Native name: </span
+                        >{{ getNativeName(country) }}
+                    </p>
+                    <p class="my-2">
+                        <span class="font-semibold">Population: </span
+                        >{{ country["population"] }}
+                    </p>
+                    <p class="my-2">
+                        <span class="font-semibold">Region: </span
+                        >{{ country["region"] }}
+                    </p>
+                    <p class="my-2">
+                        <span class="font-semibold">Sub Region: </span
+                        >{{ country["subregion"] }}
+                    </p>
+                    <p class="my-2">
+                        <span class="font-semibold">Capital: </span
+                        >{{ getCapital(country) || "No capital" }}
+                    </p>
+                </div>
+                <div>
+                    <p class="my-2">
+                        <span class="font-semibold">Top Level Domain: </span
+                        >{{ getDomain(country) || "No domain" }}
+                    </p>
+                    <p class="my-2">
+                        <span class="font-semibold">Currencies: </span
+                        >{{ getCurrencies(country) }}
+                    </p>
+                    <p class="my-2">
+                        <span class="font-semibold">Language: </span
+                        >{{ getLanguages(country) }}
+                    </p>
+                </div>
             </div>
-            <div>
-                Border countries:
-                <span v-if="borderCountries === undefined"
-                    >{{ country["name"]["common"] }} does not border any other
-                    countries!</span
-                >
-                <button
-                    v-if="borderCountries !== undefined"
-                    v-for="c in getBorders(country)"
-                    @click="currentCountryFunctions.setCurrentCountry(c)"
-                >
-                    {{ c["name"]["common"] }}
-                </button>
+            <div
+                class="flex flex-col w-[320px] lg:w-auto mt-5 font-semibold lg:flex-row lg:items-center"
+            >
+                <p class="mr-5">
+                    Border countries:
+                    <span v-if="borderCountries === undefined"
+                        >{{ country["name"]["common"] }} does not border any
+                        other countries!</span
+                    >
+                </p>
+                <div>
+                    <button
+                        v-if="borderCountries !== undefined"
+                        v-for="c in getBorders(country)"
+                        @click="currentCountryFunctions.setCurrentCountry(c)"
+                        class="font-light px-4 py-1.5 mr-2 my-2 bg-lmelements dark:bg-dmelements hover:bg-slate-600"
+                    >
+                        {{ c["name"]["common"] }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
