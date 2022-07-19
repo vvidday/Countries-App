@@ -2,7 +2,7 @@
 import { PropType } from "vue";
 import { Country } from "../api/interfaces";
 
-defineProps({
+const props = defineProps({
     country: {
         required: true,
         type: Object as PropType<Country>,
@@ -11,20 +11,35 @@ defineProps({
 </script>
 
 <template>
-    <div>
+    <div class="mx-5 my-10">
         <div>
             <img
                 :src="country['flags']['png']"
                 :alt="`Flag of ${country['name']['common']}`"
             />
         </div>
-        <div>
-            <p>{{ country["name"]["common"] }}</p>
-        </div>
-        <div>
-            <p>Population: {{ country["population"] }}</p>
-            <p>Region: {{ country["region"] }}</p>
-            <p>Capital: {{ country["capital"][0] }}</p>
+        <div
+            class="bg-lmelements dark:bg-dmelements px-5 pb-10 text-sm rounded-b-md font-light"
+        >
+            <div>
+                <p class="font-bold text-base py-4">
+                    {{ country["name"]["common"] }}
+                </p>
+            </div>
+            <div class="preview-info">
+                <p>
+                    <span class="font-semibold">Population:</span>
+                    {{ country["population"] }}
+                </p>
+                <p>
+                    <span class="font-semibold">Region:</span>
+                    {{ country["region"] }}
+                </p>
+                <p v-if="country['capital'] !== undefined">
+                    <span class="font-semibold">Capital:</span>
+                    {{ country["capital"][0] }}
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -35,6 +50,10 @@ img {
     height: 160px;
     object-fit: fill;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 6px;
+}
+
+.preview-info > p {
+    margin: 5px 0px;
 }
 </style>

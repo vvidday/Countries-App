@@ -11,15 +11,13 @@ const props = defineProps({
         type: Array as PropType<Country[]>,
     },
 });
-let country = props.countryList[0];
 </script>
 
 <template>
-    <div>Country Display</div>
-    <div
-        v-if="props.countryList !== undefined"
-        v-for="country in props.countryList"
-    >
-        <CountryPreview :country="country" />
+    <div class="flex flex-wrap mx-10 my-5 justify-between">
+        <CountryPreview
+            v-for="country in props.countryList"
+            :country="country"
+        />
     </div>
 </template>
