@@ -4,9 +4,13 @@ module.exports = {
     theme: {
         screens: {
             sm: "480px",
+            bp1: "694px",
             md: "768px",
             lg: "976px",
+            bp2: "1121px",
             xl: "1440px",
+
+            bp3: "1468px",
         },
         fontFamily: {
             sans: ["Nunito Sans", "sans-serif"],

@@ -35,7 +35,8 @@ const filterByRegion = (e: Event) => {
     <select
         name="region"
         id="region"
-        class="text-black"
+        class="bg-lmelements dark:bg-dmelements py-3 pl-4 pr-10 cursor-pointer"
+        style="border-right: 16px solid transparent"
         @change="filterByRegion($event)"
     >
         <option selected disabled value="default">Filter by Region</option>

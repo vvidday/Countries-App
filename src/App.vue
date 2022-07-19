@@ -16,8 +16,8 @@ import {
 import { Country } from "./api/interfaces";
 import CountryDisplay from "./components/CountryDisplay.vue";
 import Filter from "./components/Filter.vue";
-import { DummyCountry } from "./dummy/dummycountry";
 import CountryFull from "./components/CountryFull.vue";
+import Search from "./components/Search.vue";
 
 // State to keep track of all countries (CODES) - used for quick border lookup
 const allCountriesCodes: CountryCodeStore = reactive({
@@ -106,12 +106,31 @@ export interface CurrentCountryFunctions {
 <template>
     <body class="text-black dark:text-white font-light">
         <Navbar />
-        <Filter
-            v-if="!loading && !isViewingIndividual"
-            :region-list="regionList"
-            :country-list-store="countryListStore"
-            :all-countries="allCountries"
-        />
+        <div
+            class="mt-10 flex flex-col bp1:grid bp1:grid-cols-2 bp1:grid-rows-1"
+        >
+            <div
+                class="flex justify-center bp1:justify-start bp1:ml-10 lg:ml-20"
+            >
+                <Search
+                    :all-countries="allCountries"
+                    :current-country-functions="currentCountryFunctions"
+                    class=""
+                    v-if="!loading && !isViewingIndividual"
+                />
+            </div>
+            <div
+                class="flex justify-center mt-6 bp1:mt-0 bp1:justify-end bp1:mr-10 lg:mr-20"
+            >
+                <Filter
+                    v-if="!loading && !isViewingIndividual"
+                    :region-list="regionList"
+                    :country-list-store="countryListStore"
+                    :all-countries="allCountries"
+                />
+            </div>
+        </div>
+
         <CountryDisplay
             v-if="!loading && !isViewingIndividual"
             :country-list="countryListStore.countryList"

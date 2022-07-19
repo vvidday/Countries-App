@@ -27,7 +27,9 @@ const viewFullCountry = (country: Country) => {
 </script>
 
 <template>
-    <div class="flex flex-wrap lg:mx-10 lg:my-5 justify-center">
+    <div
+        class="flex flex-wrap lg:mx-10 lg:my-5 justify-center bp1:justify-between"
+    >
         <CountryPreview
             class="hover:cursor-pointer sm:mx-10 my-10"
             v-for="country in props.countryList"
