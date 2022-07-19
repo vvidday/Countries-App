@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="mx-5 my-10">
+    <div>
         <div>
             <img
                 :src="country['flags']['png']"
