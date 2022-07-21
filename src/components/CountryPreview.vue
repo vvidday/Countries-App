@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 import { Country } from "../api/interfaces";
+import { formatNumber } from "../helpers/numbers";
 
 const props = defineProps({
     country: {
@@ -29,7 +30,7 @@ const props = defineProps({
             <div class="preview-info">
                 <p>
                     <span class="font-semibold">Population:</span>
-                    {{ country["population"] }}
+                    {{ formatNumber(country["population"]) }}
                 </p>
                 <p>
                     <span class="font-semibold">Region:</span>

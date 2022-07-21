@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import { stringify } from "querystring";
-import { inject, onMounted, PropType, watch } from "vue";
+import { PropType } from "vue";
 import { Country } from "../api/interfaces";
-import {
-    CountryCodeMap,
-    CountryMap,
-    CurrentCountryFunctions,
-} from "../App.vue";
+import { CurrentCountryFunctions } from "../App.vue";
 import CountryPreview from "./CountryPreview.vue";
 
 const props = defineProps({

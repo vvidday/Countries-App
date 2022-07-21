@@ -2,6 +2,7 @@
 import { PropType, ref } from "vue";
 import { Country } from "../api/interfaces";
 import { CountryCodeStore, CurrentCountryFunctions } from "../App.vue";
+import { formatNumber } from "../helpers/numbers";
 
 const props = defineProps({
     country: {
@@ -103,7 +104,7 @@ const borderCountries = getBorders(props.country);
                     </p>
                     <p class="my-2">
                         <span class="font-semibold">Population: </span
-                        >{{ country["population"] }}
+                        >{{ formatNumber(country["population"]) }}
                     </p>
                     <p class="my-2">
                         <span class="font-semibold">Region: </span
@@ -138,7 +139,9 @@ const borderCountries = getBorders(props.country);
             >
                 <p class="mr-5">
                     Border countries:
-                    <span v-if="borderCountries === undefined"
+                    <span
+                        v-if="borderCountries === undefined"
+                        class="font-light"
                         >{{ country["name"]["common"] }} does not border any
                         other countries!</span
                     >
