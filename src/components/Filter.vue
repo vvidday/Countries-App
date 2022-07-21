@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { PropType, ref } from 'vue';
 import { CountryListStore, CountryStore } from '../App.vue';
 
 const props = defineProps({
@@ -14,10 +14,14 @@ const props = defineProps({
     allCountries: {
         required: true,
         type: Object as PropType<CountryStore>
+    },
+    currentRegion: {
+        required: true,
+        type: String
     }
 })
 
-
+const emit = defineEmits(['changeFilteredRegion']);
 const filterByRegion = (e: Event) => {
     const region : string = (<HTMLSelectElement>e.target).value
     // Reset countryliststore
@@ -31,6 +35,8 @@ const filterByRegion = (e: Event) => {
             props.countryListStore.addToList(value);
         }
     })
+    emit('changeFilteredRegion', region);
+
 }
 </script>
 
@@ -41,6 +47,7 @@ const filterByRegion = (e: Event) => {
         class="bg-lmelements dark:bg-dmelements py-3 pl-4 pr-10 cursor-pointer"
         style="border-right: 16px solid transparent"
         @change="filterByRegion($event)"
+        :value="currentRegion"
     >
         <option selected disabled value="default">Filter by Region</option>
         <option value="all">All</option>

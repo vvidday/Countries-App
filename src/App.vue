@@ -1,18 +1,9 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from "./components/HelloWorld.vue";
 import Navbar from "./components/Navbar.vue";
-import { getSingleCountry, getCountry, getAllCountries } from "./api/countries";
-import {
-    reactive,
-    onBeforeMount,
-    provide,
-    InjectionKey,
-    ref,
-    toRefs,
-    Ref,
-} from "vue";
+import { getAllCountries } from "./api/countries";
+import { reactive, onBeforeMount, ref, Ref } from "vue";
 import { Country } from "./api/interfaces";
 import CountryDisplay from "./components/CountryDisplay.vue";
 import Filter from "./components/Filter.vue";
@@ -76,6 +67,9 @@ const navFunctions: NavFunctions = reactive({
     },
 });
 
+// Ref to store filtered region
+const currentRegion = ref<string>("default");
+
 // Function that loads all countries into memory (to be called before Mount)
 onBeforeMount(async () => {
     // Dark Mode Checking
@@ -105,8 +99,6 @@ onBeforeMount(async () => {
 </script>
 <script lang="ts">
 // Exporting type for type-safe provide/injections
-export const CountryCodeMap = Symbol() as InjectionKey<Map<string, Country>>;
-export const CountryMap = Symbol() as InjectionKey<Map<string, Country>>;
 export interface CountryListStore {
     countryList: Country[];
     addToList(country: Country): void;
@@ -157,10 +149,12 @@ export interface NavFunctions {
                     class="flex justify-center mt-6 bp1:mt-0 bp1:justify-end bp1:mr-10 lg:mr-20"
                 >
                     <Filter
+                        @changeFilteredRegion="(region: string) => currentRegion = region"
                         v-if="!loading && !isViewingIndividual"
                         :region-list="regionList"
                         :country-list-store="countryListStore"
                         :all-countries="allCountries"
+                        :current-region="currentRegion"
                     />
                 </div>
             </div>
