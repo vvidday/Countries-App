@@ -132,6 +132,10 @@ export interface NavFunctions {
                 :prefers-dark-mode="prefersDarkMode"
                 :navFunctions="navFunctions"
             />
+            <div v-if="loading" class="flex justify-center">
+                <div class="loader mt-10"></div>
+            </div>
+
             <div
                 class="mt-10 flex flex-col bp1:grid bp1:grid-cols-2 bp1:grid-rows-1"
             >
@@ -175,4 +179,23 @@ export interface NavFunctions {
     </html>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Loading component taken from W3Schools */
+.loader {
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+</style>
